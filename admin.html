@@ -53,8 +53,91 @@
           </div>
         </div>
 
-        <div class="admin-tabs" id="admin-tabs" role="tablist" aria-label="审核状态"></div>
-        <div class="review-list" id="review-list"></div>
+        <div class="admin-module-tabs" id="admin-module-tabs" role="tablist" aria-label="后台模块">
+          <button type="button" data-module="review">投稿审核</button>
+          <button type="button" data-module="analytics">数据看板</button>
+        </div>
+
+        <section class="admin-module" id="review-module" aria-label="投稿审核">
+          <div class="admin-tabs" id="admin-tabs" role="tablist" aria-label="审核状态"></div>
+          <div class="review-list" id="review-list"></div>
+        </section>
+
+        <section class="admin-module analytics-view" id="analytics-module" aria-label="数据看板" hidden>
+          <form class="analytics-filters" id="analytics-filters">
+            <label>
+              <span>时间范围</span>
+              <select id="analytics-range">
+                <option value="today">今天</option>
+                <option value="yesterday">昨天</option>
+                <option value="7">近 7 天</option>
+                <option value="30">近 30 天</option>
+                <option value="custom">自定义</option>
+              </select>
+            </label>
+            <label>
+              <span>开始日期</span>
+              <input id="analytics-date-from" type="date" />
+            </label>
+            <label>
+              <span>结束日期</span>
+              <input id="analytics-date-to" type="date" />
+            </label>
+            <label>
+              <span>投稿人</span>
+              <input id="analytics-nickname" type="search" placeholder="输入昵称筛选" />
+            </label>
+            <label>
+              <span>状态</span>
+              <select id="analytics-status">
+                <option value="all">全部状态</option>
+                <option value="pending">待审核</option>
+                <option value="approved">已通过</option>
+                <option value="rejected">已拒绝</option>
+              </select>
+            </label>
+            <label>
+              <span>排序</span>
+              <select id="analytics-sort">
+                <option value="createdAt">投稿时间</option>
+                <option value="favorite">喜欢数</option>
+                <option value="like">点赞数</option>
+                <option value="dislike">点踩数</option>
+                <option value="totalInteractions">总互动数</option>
+              </select>
+            </label>
+            <label>
+              <span>顺序</span>
+              <select id="analytics-order">
+                <option value="desc">从高到低</option>
+                <option value="asc">从低到高</option>
+              </select>
+            </label>
+            <div class="analytics-filter-actions">
+              <button class="primary-action" type="submit">查看数据</button>
+              <button type="button" id="analytics-reset">重置</button>
+            </div>
+          </form>
+
+          <p class="form-message" id="analytics-message" role="alert"></p>
+          <div class="analytics-summary-grid" id="analytics-summary"></div>
+          <div class="analytics-grid">
+            <section class="analytics-panel">
+              <div class="panel-heading">
+                <p class="eyebrow">DAILY</p>
+                <h2>每天投稿情况</h2>
+              </div>
+              <div class="daily-stat-list" id="analytics-daily"></div>
+            </section>
+            <section class="analytics-panel">
+              <div class="panel-heading">
+                <p class="eyebrow">POSTS</p>
+                <h2>投稿互动明细</h2>
+              </div>
+              <div class="analytics-post-list" id="analytics-posts"></div>
+            </section>
+          </div>
+        </section>
       </section>
     </main>
 

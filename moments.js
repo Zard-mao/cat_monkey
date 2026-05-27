@@ -8,10 +8,32 @@ const $ = (selector) => document.querySelector(selector);
 let activeTag = "全部";
 let currentPosts = [];
 let activeAdminStatus = "pending";
+let activeAdminModule = "review";
 const pendingReactions = new Set();
+const analyticsState = {
+  range: "today",
+  dateFrom: todayKey(),
+  dateTo: todayKey(),
+  nickname: "",
+  status: "all",
+  sortBy: "createdAt",
+  sortOrder: "desc"
+};
 
 function todayKey() {
-  return new Date().toISOString().slice(0, 10);
+  return dateInputKey(new Date());
+}
+
+function dateInputKey(date) {
+  const value = new Date(date);
+  value.setMinutes(value.getMinutes() - value.getTimezoneOffset());
+  return value.toISOString().slice(0, 10);
+}
+
+function shiftDateKey(days) {
+  const date = new Date();
+  date.setDate(date.getDate() + days);
+  return dateInputKey(date);
 }
 
 function getVisitorId() {
@@ -327,6 +349,8 @@ function renderMomentForm() {
 }
 
 function setupAdminPage() {
+  setupAdminModules();
+  setupAnalyticsFilters();
   renderLoginState(Boolean(reviewerToken()));
   $("#login-form").addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -355,12 +379,39 @@ function renderLoginState(isLoggedIn) {
   $("#login-view").hidden = isLoggedIn;
   $("#review-view").hidden = !isLoggedIn;
   if (isLoggedIn) {
-    renderAdmin("pending").catch(() => {
+    renderActiveAdminModule().catch(() => {
       setReviewerToken("");
       renderLoginState(false);
       setMessage($("#login-message"), "登录已失效，请重新登录。", "warn");
     });
   }
+}
+
+function setupAdminModules() {
+  const tabs = $("#admin-module-tabs");
+  tabs?.querySelectorAll("[data-module]").forEach((button) => {
+    button.addEventListener("click", () => {
+      activeAdminModule = button.dataset.module;
+      renderActiveAdminModule();
+    });
+  });
+}
+
+function renderAdminModuleTabs() {
+  $("#admin-module-tabs")?.querySelectorAll("[data-module]").forEach((button) => {
+    button.dataset.active = button.dataset.module === activeAdminModule;
+  });
+  $("#review-module").hidden = activeAdminModule !== "review";
+  $("#analytics-module").hidden = activeAdminModule !== "analytics";
+}
+
+async function renderActiveAdminModule() {
+  renderAdminModuleTabs();
+  if (activeAdminModule === "analytics") {
+    await renderAnalytics();
+    return;
+  }
+  await renderAdmin(activeAdminStatus);
 }
 
 async function renderAdmin(status = activeAdminStatus) {
@@ -452,7 +503,202 @@ async function reviewPost(id, action) {
     headers: { Authorization: `Bearer ${reviewerToken()}` },
     body: JSON.stringify({ id, action })
   });
-  await renderAdmin(activeAdminStatus);
+  await renderActiveAdminModule();
+}
+
+function setupAnalyticsFilters() {
+  syncAnalyticsInputs();
+  $("#analytics-range")?.addEventListener("change", () => {
+    analyticsState.range = $("#analytics-range").value;
+    applyAnalyticsRange();
+    syncAnalyticsInputs();
+  });
+  $("#analytics-reset")?.addEventListener("click", () => {
+    Object.assign(analyticsState, {
+      range: "today",
+      dateFrom: todayKey(),
+      dateTo: todayKey(),
+      nickname: "",
+      status: "all",
+      sortBy: "createdAt",
+      sortOrder: "desc"
+    });
+    syncAnalyticsInputs();
+    renderAnalytics();
+  });
+  $("#analytics-filters")?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    readAnalyticsInputs();
+    renderAnalytics();
+  });
+}
+
+function applyAnalyticsRange() {
+  if (analyticsState.range === "today") {
+    analyticsState.dateFrom = todayKey();
+    analyticsState.dateTo = todayKey();
+  } else if (analyticsState.range === "yesterday") {
+    analyticsState.dateFrom = shiftDateKey(-1);
+    analyticsState.dateTo = shiftDateKey(-1);
+  } else if (analyticsState.range === "7") {
+    analyticsState.dateFrom = shiftDateKey(-6);
+    analyticsState.dateTo = todayKey();
+  } else if (analyticsState.range === "30") {
+    analyticsState.dateFrom = shiftDateKey(-29);
+    analyticsState.dateTo = todayKey();
+  }
+}
+
+function syncAnalyticsInputs() {
+  if (!$("#analytics-filters")) return;
+  $("#analytics-range").value = analyticsState.range;
+  $("#analytics-date-from").value = analyticsState.dateFrom;
+  $("#analytics-date-to").value = analyticsState.dateTo;
+  $("#analytics-nickname").value = analyticsState.nickname;
+  $("#analytics-status").value = analyticsState.status;
+  $("#analytics-sort").value = analyticsState.sortBy;
+  $("#analytics-order").value = analyticsState.sortOrder;
+  const custom = analyticsState.range === "custom";
+  $("#analytics-date-from").disabled = !custom;
+  $("#analytics-date-to").disabled = !custom;
+}
+
+function readAnalyticsInputs() {
+  analyticsState.range = $("#analytics-range").value;
+  if (analyticsState.range === "custom") {
+    analyticsState.dateFrom = $("#analytics-date-from").value || todayKey();
+    analyticsState.dateTo = $("#analytics-date-to").value || analyticsState.dateFrom;
+  } else {
+    applyAnalyticsRange();
+  }
+  if (analyticsState.dateFrom > analyticsState.dateTo) {
+    [analyticsState.dateFrom, analyticsState.dateTo] = [analyticsState.dateTo, analyticsState.dateFrom];
+  }
+  analyticsState.nickname = $("#analytics-nickname").value.trim();
+  analyticsState.status = $("#analytics-status").value;
+  analyticsState.sortBy = $("#analytics-sort").value;
+  analyticsState.sortOrder = $("#analytics-order").value;
+  syncAnalyticsInputs();
+}
+
+async function renderAnalytics() {
+  readAnalyticsInputs();
+  setMessage($("#analytics-message"), "正在读取数据...", "");
+  $("#analytics-summary").innerHTML = "";
+  $("#analytics-daily").innerHTML = "";
+  $("#analytics-posts").innerHTML = "";
+
+  const query = new URLSearchParams({
+    dateFrom: analyticsState.dateFrom,
+    dateTo: analyticsState.dateTo,
+    nickname: analyticsState.nickname,
+    status: analyticsState.status,
+    sortBy: analyticsState.sortBy,
+    sortOrder: analyticsState.sortOrder
+  });
+  try {
+    const data = await api(`admin-analytics?${query.toString()}`, {
+      headers: { Authorization: `Bearer ${reviewerToken()}` }
+    });
+    setMessage($("#analytics-message"), "", "");
+    renderAnalyticsSummary(data.summary || {});
+    renderDailyStats(data.dailyStats || []);
+    renderAnalyticsPosts(data.posts || []);
+  } catch (error) {
+    setMessage($("#analytics-message"), error.message, "warn");
+  }
+}
+
+function renderAnalyticsSummary(summary) {
+  const cards = [
+    ["总投稿", summary.totalPosts || 0],
+    ["待审核", summary.pending || 0],
+    ["已通过", summary.approved || 0],
+    ["已拒绝", summary.rejected || 0],
+    ["❤️ 喜欢", summary.favorite || 0],
+    ["👍 点赞", summary.like || 0],
+    ["👎 点踩", summary.dislike || 0],
+    ["总互动", summary.totalInteractions || 0]
+  ];
+  $("#analytics-summary").innerHTML = cards
+    .map(([label, value]) => `<article class="analytics-stat-card"><span>${label}</span><strong>${value}</strong></article>`)
+    .join("");
+}
+
+function renderDailyStats(stats) {
+  const list = $("#analytics-daily");
+  if (!stats.length) {
+    list.innerHTML = `<div class="empty-state">当前条件下没有投稿数据。</div>`;
+    return;
+  }
+  list.innerHTML = stats
+    .map(
+      (item) => `
+        <article class="daily-stat-row">
+          <div>
+            <strong>${escapeHtml(item.date)}</strong>
+            <span>投稿 ${item.totalPosts} · 通过 ${item.approved} · 待审 ${item.pending} · 拒绝 ${item.rejected}</span>
+          </div>
+          <p>❤️ ${item.favorite}　👍 ${item.like}　👎 ${item.dislike}</p>
+        </article>
+      `
+    )
+    .join("");
+}
+
+function renderAnalyticsPosts(posts) {
+  const list = $("#analytics-posts");
+  if (!posts.length) {
+    list.innerHTML = `<div class="empty-state">没有符合筛选条件的投稿。</div>`;
+    return;
+  }
+  list.innerHTML = "";
+  posts.forEach((post) => list.appendChild(renderAnalyticsPostCard(post)));
+}
+
+function renderAnalyticsPostCard(post) {
+  const article = document.createElement("article");
+  article.className = "analytics-post-card";
+  const image = responsiveMomentImage(post);
+  article.innerHTML = `
+    <img class="analytics-post-image" src="${image.src}" srcset="${image.srcset}" sizes="(max-width: 720px) 100vw, 180px" alt="${escapeHtml(post.description)}" loading="lazy" decoding="async" />
+    <div class="analytics-post-main">
+      <div class="moment-meta">
+        <strong>${escapeHtml(post.nickname)}</strong>
+        <span>${formatTime(post.createdAt)}</span>
+      </div>
+      <p>${escapeHtml(post.description)}</p>
+      <div class="moment-tags">${post.tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}</div>
+      <div class="analytics-post-metrics">
+        <span>状态：${statusLabel(post.status)}</span>
+        <span>❤️ ${post.reactionCounts?.favorite || 0}</span>
+        <span>👍 ${post.reactionCounts?.like || 0}</span>
+        <span>👎 ${post.reactionCounts?.dislike || 0}</span>
+        <span>总互动 ${post.totalInteractions || 0}</span>
+      </div>
+    </div>
+    <div class="analytics-post-actions"></div>
+  `;
+  const actions = article.querySelector(".analytics-post-actions");
+  if (post.status === "pending") {
+    actions.append(actionButton("通过", "approve", post.id));
+    actions.append(actionButton("拒绝", "reject", post.id));
+  } else {
+    const state = document.createElement("span");
+    state.className = "review-status";
+    state.textContent = post.status === "approved" ? "已公开" : "已拒绝";
+    actions.append(state);
+    actions.append(
+      post.status === "approved"
+        ? actionButton("改为不通过", "reject", post.id)
+        : actionButton("改为通过", "approve", post.id)
+    );
+  }
+  return article;
+}
+
+function statusLabel(status) {
+  return { pending: "待审核", approved: "已通过", rejected: "已拒绝" }[status] || "未知";
 }
 
 if (page === "moments") setupMomentsPage();

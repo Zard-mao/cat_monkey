@@ -1,0 +1,222 @@
+<svg width="1600" height="1100" viewBox="0 0 1600 1100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="1100" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06070D"/>
+      <stop offset="0.45" stop-color="#0B1220"/>
+      <stop offset="1" stop-color="#11131D"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#151B28"/>
+      <stop offset="1" stop-color="#0A0E17"/>
+    </linearGradient>
+    <linearGradient id="pinkBlue" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FF6EB7"/>
+      <stop offset="1" stop-color="#51D9FF"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#65F2B4"/>
+      <stop offset="1" stop-color="#51D9FF"/>
+    </linearGradient>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.32 0 0 0 0 0.85 0 0 0 0 1 0 0 0 0.45 0"/>
+      <feBlend in="SourceGraphic"/>
+    </filter>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="24" flood-color="#000000" flood-opacity="0.36"/>
+    </filter>
+    <style>
+      .title { font: 800 46px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #F4F8FF; }
+      .h1 { font: 800 34px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #F4F8FF; }
+      .h2 { font: 800 24px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #F4F8FF; }
+      .h3 { font: 800 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #EEF5FF; }
+      .body { font: 500 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #C8D4E5; }
+      .small { font: 600 13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #94A3B8; }
+      .tiny { font: 700 11px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #7F8CA3; letter-spacing: 1.8px; }
+      .num { font: 900 31px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #FFFFFF; }
+      .pill { font: 800 15px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #EAF4FF; }
+      .line { stroke: rgba(255,255,255,0.12); }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1100" fill="url(#bg)"/>
+  <circle cx="140" cy="180" r="120" fill="#FF6EB7" opacity="0.12" filter="url(#softGlow)"/>
+  <circle cx="1390" cy="250" r="160" fill="#51D9FF" opacity="0.11" filter="url(#softGlow)"/>
+  <circle cx="980" cy="990" r="180" fill="#65F2B4" opacity="0.08" filter="url(#softGlow)"/>
+
+  <text x="72" y="86" class="tiny" fill="#6EF7C8">MONKEY ADMIN MODULE / PRODUCT MOCKUP</text>
+  <text x="72" y="142" class="title">审核后台数据看板 · Web + H5</text>
+  <text x="72" y="180" class="body">登录后台后通过一级 tab 在「投稿审核」和「数据看板」之间切换；数据看板支持日期、投稿人、状态筛选和互动排序。</text>
+
+  <!-- Desktop frame -->
+  <g transform="translate(64 230)" filter="url(#cardShadow)">
+    <rect x="0" y="0" width="1012" height="790" rx="28" fill="#080B12" stroke="rgba(255,255,255,0.12)"/>
+    <rect x="0" y="0" width="1012" height="86" rx="28" fill="#0E1421"/>
+    <text x="34" y="53" class="h2">Monkey 审核后台</text>
+    <rect x="672" y="22" width="132" height="42" rx="21" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.15)"/>
+    <text x="704" y="49" class="pill">投稿审核</text>
+    <rect x="818" y="22" width="132" height="42" rx="21" fill="rgba(81,217,255,0.14)" stroke="#51D9FF"/>
+    <text x="850" y="49" class="pill" fill="#D7FAFF">数据看板</text>
+
+    <rect x="28" y="112" width="956" height="94" rx="18" fill="url(#panel)" stroke="rgba(255,255,255,0.10)"/>
+    <text x="54" y="146" class="tiny" fill="#6EF7C8">FILTERS</text>
+    <rect x="54" y="162" width="78" height="28" rx="14" fill="#263344" stroke="rgba(255,255,255,0.12)"/>
+    <text x="74" y="181" class="small" fill="#EAF4FF">今天</text>
+    <rect x="142" y="162" width="78" height="28" rx="14" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)"/>
+    <text x="162" y="181" class="small">昨天</text>
+    <rect x="230" y="162" width="102" height="28" rx="14" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)"/>
+    <text x="249" y="181" class="small">最近 7 天</text>
+    <rect x="356" y="150" width="148" height="40" rx="12" fill="#0B101A" stroke="rgba(255,255,255,0.12)"/>
+    <text x="374" y="175" class="small">投稿人：Bing</text>
+    <rect x="518" y="150" width="124" height="40" rx="12" fill="#0B101A" stroke="rgba(255,255,255,0.12)"/>
+    <text x="537" y="175" class="small">状态：全部</text>
+    <rect x="656" y="150" width="162" height="40" rx="12" fill="#0B101A" stroke="#51D9FF"/>
+    <text x="674" y="175" class="small" fill="#D7FAFF">排序：按喜欢最多</text>
+    <rect x="836" y="150" width="118" height="40" rx="12" fill="rgba(255,110,183,0.16)" stroke="#FF6EB7"/>
+    <text x="864" y="175" class="small" fill="#FFD7E9">清空筛选</text>
+
+    <!-- Metrics -->
+    <g transform="translate(28 230)">
+      <rect width="154" height="112" rx="18" fill="#101827" stroke="rgba(255,255,255,0.10)"/>
+      <text x="18" y="32" class="small">投稿总数</text>
+      <text x="18" y="78" class="num">42</text>
+      <text x="92" y="77" class="small" fill="#65F2B4">+6 今日</text>
+    </g>
+    <g transform="translate(192 230)">
+      <rect width="154" height="112" rx="18" fill="#101827" stroke="rgba(255,255,255,0.10)"/>
+      <text x="18" y="32" class="small">待审核</text>
+      <text x="18" y="78" class="num">5</text>
+      <text x="74" y="77" class="small" fill="#F6D365">待处理</text>
+    </g>
+    <g transform="translate(356 230)">
+      <rect width="154" height="112" rx="18" fill="#101827" stroke="rgba(255,255,255,0.10)"/>
+      <text x="18" y="32" class="small">已通过</text>
+      <text x="18" y="78" class="num">33</text>
+      <text x="84" y="77" class="small" fill="#65F2B4">公开</text>
+    </g>
+    <g transform="translate(520 230)">
+      <rect width="154" height="112" rx="18" fill="#101827" stroke="rgba(255,255,255,0.10)"/>
+      <text x="18" y="32" class="small">喜欢</text>
+      <text x="18" y="78" class="num">128</text>
+      <text x="102" y="77" class="small" fill="#FF9BCB">❤️</text>
+    </g>
+    <g transform="translate(684 230)">
+      <rect width="154" height="112" rx="18" fill="#101827" stroke="rgba(255,255,255,0.10)"/>
+      <text x="18" y="32" class="small">点赞</text>
+      <text x="18" y="78" class="num">96</text>
+      <text x="84" y="77" class="small" fill="#51D9FF">👍</text>
+    </g>
+    <g transform="translate(848 230)">
+      <rect width="136" height="112" rx="18" fill="#101827" stroke="rgba(255,255,255,0.10)"/>
+      <text x="18" y="32" class="small">点踩</text>
+      <text x="18" y="78" class="num">7</text>
+      <text x="58" y="77" class="small" fill="#F6D365">👎</text>
+    </g>
+
+    <!-- Daily stats -->
+    <rect x="28" y="370" width="376" height="370" rx="22" fill="url(#panel)" stroke="rgba(255,255,255,0.10)"/>
+    <text x="54" y="408" class="h3">每日投稿情况</text>
+    <text x="54" y="434" class="small">点击日期后联动右侧投稿列表</text>
+    <line x1="54" y1="462" x2="378" y2="462" class="line"/>
+    <text x="54" y="490" class="small">日期</text>
+    <text x="158" y="490" class="small">投稿</text>
+    <text x="230" y="490" class="small">通过</text>
+    <text x="308" y="490" class="small">互动</text>
+    <g class="body">
+      <rect x="46" y="510" width="334" height="48" rx="12" fill="rgba(81,217,255,0.10)" stroke="rgba(81,217,255,0.35)"/>
+      <text x="58" y="540">05/27</text><text x="170" y="540">6</text><text x="240" y="540">4</text><text x="318" y="540">31</text>
+      <text x="58" y="604">05/26</text><text x="170" y="604">8</text><text x="240" y="604">6</text><text x="318" y="604">44</text>
+      <text x="58" y="668">05/25</text><text x="170" y="668">5</text><text x="240" y="668">3</text><text x="318" y="668">18</text>
+      <text x="58" y="724">05/24</text><text x="170" y="724">3</text><text x="240" y="724">2</text><text x="318" y="724">9</text>
+    </g>
+
+    <!-- Posts table -->
+    <rect x="430" y="370" width="554" height="370" rx="22" fill="url(#panel)" stroke="rgba(255,255,255,0.10)"/>
+    <text x="456" y="408" class="h3">投稿互动排行</text>
+    <text x="456" y="434" class="small">按喜欢 / 点赞 / 点踩 / 总互动排序</text>
+
+    <g transform="translate(456 462)">
+      <rect width="500" height="72" rx="14" fill="#0B101A" stroke="rgba(255,255,255,0.10)"/>
+      <rect x="14" y="12" width="48" height="48" rx="8" fill="#03050A" stroke="rgba(255,255,255,0.14)"/>
+      <circle cx="38" cy="36" r="18" fill="#050505"/>
+      <circle cx="32" cy="32" r="3" fill="#F6D365"/>
+      <circle cx="44" cy="32" r="3" fill="#F6D365"/>
+      <text x="78" y="29" class="h3">Bing · 办公室观察</text>
+      <text x="78" y="54" class="small">已通过 · 05/27 19:10</text>
+      <text x="330" y="43" class="body">❤️ 12</text>
+      <text x="390" y="43" class="body">👍 8</text>
+      <text x="446" y="43" class="body">👎 1</text>
+    </g>
+    <g transform="translate(456 548)">
+      <rect width="500" height="72" rx="14" fill="#0B101A" stroke="rgba(255,255,255,0.10)"/>
+      <rect x="14" y="12" width="48" height="48" rx="8" fill="#03050A" stroke="rgba(255,255,255,0.14)"/>
+      <path d="M22 48 C24 26 52 24 54 48 Z" fill="#050505"/>
+      <circle cx="34" cy="36" r="3" fill="#F6D365"/>
+      <circle cx="44" cy="36" r="3" fill="#F6D365"/>
+      <text x="78" y="29" class="h3">档案员 · 认真读书</text>
+      <text x="78" y="54" class="small">已通过 · 05/27 15:24</text>
+      <text x="330" y="43" class="body">❤️ 9</text>
+      <text x="390" y="43" class="body">👍 6</text>
+      <text x="446" y="43" class="body">👎 0</text>
+    </g>
+    <g transform="translate(456 634)">
+      <rect width="500" height="72" rx="14" fill="#0B101A" stroke="rgba(255,255,255,0.10)"/>
+      <rect x="14" y="12" width="48" height="48" rx="8" fill="#03050A" stroke="rgba(255,255,255,0.14)"/>
+      <path d="M18 46 C22 22 56 20 58 50 Z" fill="#050505"/>
+      <circle cx="34" cy="36" r="3" fill="#F6D365"/>
+      <circle cx="45" cy="36" r="3" fill="#F6D365"/>
+      <text x="78" y="29" class="h3">玩具管理员 · 目标锁定</text>
+      <text x="78" y="54" class="small">待审核 · 05/27 12:06</text>
+      <text x="330" y="43" class="body">❤️ 0</text>
+      <text x="390" y="43" class="body">👍 0</text>
+      <text x="446" y="43" class="body">👎 0</text>
+    </g>
+  </g>
+
+  <!-- Mobile frame -->
+  <g transform="translate(1135 230)" filter="url(#cardShadow)">
+    <rect x="0" y="0" width="380" height="790" rx="42" fill="#05070D" stroke="rgba(255,255,255,0.18)" stroke-width="2"/>
+    <rect x="24" y="24" width="332" height="742" rx="28" fill="#080B12"/>
+    <text x="46" y="70" class="tiny" fill="#6EF7C8">ADMIN H5</text>
+    <text x="46" y="108" class="h2">Monkey 后台</text>
+    <rect x="46" y="130" width="132" height="38" rx="19" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.14)"/>
+    <text x="78" y="154" class="small">投稿审核</text>
+    <rect x="188" y="130" width="132" height="38" rx="19" fill="rgba(81,217,255,0.14)" stroke="#51D9FF"/>
+    <text x="220" y="154" class="small" fill="#D7FAFF">数据看板</text>
+
+    <rect x="46" y="190" width="274" height="54" rx="16" fill="#101827" stroke="rgba(255,255,255,0.10)"/>
+    <text x="66" y="224" class="body">今天 · Bing · 按喜欢最多</text>
+
+    <g transform="translate(46 264)">
+      <rect width="128" height="92" rx="18" fill="#101827" stroke="rgba(255,255,255,0.10)"/>
+      <text x="16" y="30" class="small">投稿</text>
+      <text x="16" y="68" class="num">6</text>
+      <rect x="146" width="128" height="92" rx="18" fill="#101827" stroke="rgba(255,255,255,0.10)"/>
+      <text x="162" y="30" class="small">互动</text>
+      <text x="162" y="68" class="num">31</text>
+    </g>
+
+    <rect x="46" y="382" width="274" height="132" rx="20" fill="url(#panel)" stroke="rgba(255,255,255,0.10)"/>
+    <text x="66" y="416" class="h3">每日投稿</text>
+    <text x="66" y="450" class="body">05/27</text>
+    <text x="166" y="450" class="body">投稿 6</text>
+    <text x="248" y="450" class="body">互动 31</text>
+    <line x1="66" y1="466" x2="300" y2="466" class="line"/>
+    <text x="66" y="494" class="small">05/26 · 投稿 8 · 互动 44</text>
+
+    <rect x="46" y="536" width="274" height="176" rx="20" fill="url(#panel)" stroke="rgba(255,255,255,0.10)"/>
+    <rect x="64" y="556" width="72" height="72" rx="12" fill="#03050A" stroke="rgba(255,255,255,0.14)"/>
+    <path d="M74 612 C77 574 122 572 128 614 Z" fill="#050505"/>
+    <circle cx="94" cy="592" r="4" fill="#F6D365"/>
+    <circle cx="110" cy="592" r="4" fill="#F6D365"/>
+    <text x="150" y="578" class="h3">Bing</text>
+    <text x="150" y="606" class="small">已通过 · 办公室</text>
+    <text x="150" y="636" class="body">❤️ 12  👍 8  👎 1</text>
+    <rect x="64" y="652" width="104" height="34" rx="17" fill="rgba(81,217,255,0.12)" stroke="#51D9FF"/>
+    <text x="88" y="674" class="small" fill="#D7FAFF">查看详情</text>
+    <rect x="180" y="652" width="104" height="34" rx="17" fill="rgba(255,110,183,0.14)" stroke="#FF6EB7"/>
+    <text x="198" y="674" class="small" fill="#FFD7E9">改为不通过</text>
+  </g>
+
+  <text x="72" y="1060" class="small">设计稿文件：docs/designs/admin-analytics-dashboard.svg · 本地草稿，待确认后再进入开发</text>
+</svg>
