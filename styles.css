@@ -828,7 +828,10 @@ h3 {
 .moment-card img {
   width: 100%;
   aspect-ratio: 4 / 3;
-  object-fit: cover;
+  object-fit: contain;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.05), transparent 54%),
+    #03050a;
 }
 
 .moment-body {
@@ -1037,7 +1040,10 @@ h3 {
   width: 136px;
   aspect-ratio: 1;
   border-radius: 6px;
-  object-fit: cover;
+  object-fit: contain;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.05), transparent 54%),
+    #03050a;
 }
 
 .review-copy {

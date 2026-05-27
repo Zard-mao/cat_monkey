@@ -224,18 +224,18 @@ function imageCdnUrl(url, width) {
   if (!url) return "";
   if (url.startsWith("data:") || /^https?:\/\//i.test(url)) return url;
   const normalized = url.startsWith("/") ? url : `/${url}`;
-  return `/.netlify/images?url=${encodeURIComponent(normalized)}&w=${width}&q=72&fit=cover&fm=webp`;
+  return `/.netlify/images?url=${encodeURIComponent(normalized)}&w=${width}&q=72&fit=contain&fm=webp`;
 }
 
 function responsiveMomentImage(post) {
   if (post.imageKey) {
     const source = `/uploads/${encodeURIComponent(post.id)}`;
     return {
-      src: `/.netlify/images?url=${encodeURIComponent(source)}&w=640&q=72&fit=cover&fm=webp`,
+      src: `/.netlify/images?url=${encodeURIComponent(source)}&w=640&q=72&fit=contain&fm=webp`,
       srcset: [
-        `/.netlify/images?url=${encodeURIComponent(source)}&w=360&q=68&fit=cover&fm=webp 360w`,
-        `/.netlify/images?url=${encodeURIComponent(source)}&w=640&q=72&fit=cover&fm=webp 640w`,
-        `/.netlify/images?url=${encodeURIComponent(source)}&w=960&q=76&fit=cover&fm=webp 960w`
+        `/.netlify/images?url=${encodeURIComponent(source)}&w=360&q=68&fit=contain&fm=webp 360w`,
+        `/.netlify/images?url=${encodeURIComponent(source)}&w=640&q=72&fit=contain&fm=webp 640w`,
+        `/.netlify/images?url=${encodeURIComponent(source)}&w=960&q=76&fit=contain&fm=webp 960w`
       ].join(", ")
     };
   }
