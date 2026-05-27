@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monkey 朋友圈审核后台</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="moments-page" data-page="admin">
+    <nav class="nav page-nav" aria-label="主导航">
+      <a class="brand" href="index.html">Monkey</a>
+      <div class="nav-links">
+        <a href="index.html">首页</a>
+        <a class="nav-featured" href="moments.html">朋友圈</a>
+        <a href="admin.html" aria-current="page">审核后台</a>
+      </div>
+    </nav>
+
+    <main class="admin-shell">
+      <section class="login-view" id="login-view" aria-labelledby="login-title">
+        <div class="login-info">
+          <p class="eyebrow">ADMIN ONLY</p>
+          <h1>只有审核后台需要登录</h1>
+          <p>朋友圈浏览、投稿和互动都不需要登录。审核人员登录后，可以处理待审核 Monkey 照片。</p>
+        </div>
+        <form class="login-card" id="login-form">
+          <p class="eyebrow">REVIEW ACCESS</p>
+          <h2 id="login-title">审核后台登录</h2>
+          <label>
+            <span>审核账号</span>
+            <input id="reviewer-username" autocomplete="username" value="monkey_reviewer" required />
+          </label>
+          <label>
+            <span>密码</span>
+            <input id="reviewer-password" type="password" autocomplete="current-password" required />
+          </label>
+          <button class="primary-action full" type="submit">登录审核后台</button>
+          <p class="form-message" id="login-message" role="alert"></p>
+          <p class="security-note">审核账号和密码由后台配置，页面不展示默认密码。</p>
+        </form>
+      </section>
+
+      <section class="review-view" id="review-view" hidden>
+        <div class="admin-head">
+          <div>
+            <p class="eyebrow">REVIEW DESK</p>
+            <h1>Monkey 投稿审核</h1>
+            <p>通过后进入公开朋友圈；拒绝后普通访客不可见。</p>
+          </div>
+          <div class="reviewer-state">
+            <span>已登录：monkey_reviewer</span>
+            <button type="button" id="logout-button">退出</button>
+          </div>
+        </div>
+
+        <div class="admin-tabs" id="admin-tabs" role="tablist" aria-label="审核状态"></div>
+        <div class="review-list" id="review-list"></div>
+      </section>
+    </main>
+
+    <script src="moments.js"></script>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monkey 朋友圈</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="moments-page" data-page="moments">
+    <nav class="nav page-nav" aria-label="主导航">
+      <a class="brand" href="index.html">Monkey</a>
+      <div class="nav-links">
+        <a href="index.html">首页</a>
+        <a class="nav-featured" href="moments.html" aria-current="page">朋友圈</a>
+        <a href="admin.html">审核后台</a>
+      </div>
+    </nav>
+
+    <main class="moments-shell">
+      <section class="moments-hero" aria-labelledby="moments-title">
+        <div>
+          <p class="eyebrow">MONKEY MOMENTS</p>
+          <h1 id="moments-title">Monkey 朋友圈</h1>
+          <p>大家捕捉到的 Monkey 日常瞬间。投稿不需要登录，审核通过后才会公开展示。</p>
+        </div>
+        <a class="primary-action" href="#submit">上传 Monkey 照片</a>
+      </section>
+
+      <section class="moments-layout" aria-label="Monkey 朋友圈内容">
+        <aside class="submit-panel" id="submit" aria-labelledby="submit-title">
+          <div class="panel-heading">
+            <p class="eyebrow">SUBMIT</p>
+            <h2 id="submit-title">投稿 Monkey 瞬间</h2>
+            <p>每天最多投稿 3 次。不需要联系方式，也不需要登录。</p>
+          </div>
+
+          <form class="moment-form" id="moment-form">
+            <label>
+              <span>Monkey 照片</span>
+              <input id="moment-image" type="file" accept="image/jpeg,image/png,image/webp" required />
+            </label>
+            <label>
+              <span>描述</span>
+              <textarea id="moment-description" maxlength="120" required placeholder="例如：Monkey 今天认真研究一本书。"></textarea>
+            </label>
+            <label>
+              <span>昵称</span>
+              <input id="moment-nickname" maxlength="20" required placeholder="投稿人昵称" />
+            </label>
+            <fieldset>
+              <legend>标签</legend>
+              <div class="tag-options" id="tag-options"></div>
+            </fieldset>
+            <div class="quota-line" id="quota-line"></div>
+            <button class="primary-action full" type="submit" id="submit-button">提交审核</button>
+            <p class="form-message" id="form-message" role="status"></p>
+          </form>
+        </aside>
+
+        <section class="feed-panel" aria-labelledby="feed-title">
+          <div class="feed-head">
+            <div>
+              <p class="eyebrow">PUBLIC FEED</p>
+              <h2 id="feed-title">已公开照片</h2>
+            </div>
+            <div class="filter-strip" id="filter-strip" aria-label="标签筛选"></div>
+          </div>
+          <div class="moment-feed" id="moment-feed"></div>
+          <div class="empty-state" id="empty-state" hidden>还没有新的 Monkey 瞬间。</div>
+        </section>
+      </section>
+    </main>
+
+    <script src="moments.js"></script>
+  </body>
+</html>

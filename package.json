@@ -1,0 +1,11 @@
+{
+  "name": "catmonkey",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx netlify dev"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^10.7.8"
+  }
+}
