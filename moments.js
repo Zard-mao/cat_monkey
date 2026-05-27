@@ -155,7 +155,8 @@ function reactionButton(type, label, post) {
   const selected = post.currentReaction?.[type] ? "true" : "false";
   const count = post.reactionCounts?.[type] || 0;
   const pending = pendingReactions.has(reactionKey(post.id, type));
-  return `<button type="button" data-post-id="${post.id}" data-reaction="${type}" data-selected="${selected}" data-syncing="${pending}" ${pending ? "disabled" : ""}><span class="reaction-emoji" aria-hidden="true">${emoji}</span><span>${label}</span><strong>${count}</strong></button>`;
+  const effect = pending ? type : "";
+  return `<button type="button" data-post-id="${post.id}" data-reaction="${type}" data-selected="${selected}" data-syncing="${pending}" data-effect="${effect}" ${pending ? "disabled" : ""}><span class="reaction-emoji" aria-hidden="true">${emoji}</span><span>${label}</span><strong>${count}</strong><span class="reaction-burst" aria-hidden="true">${emoji}</span></button>`;
 }
 
 function reactionKey(postId, type) {
@@ -192,13 +193,6 @@ async function toggleReaction(postId, type) {
   currentPosts = currentPosts.map((post) => (post.id === postId ? updatePostReaction(post, type, selected) : post));
   pendingReactions.add(key);
   renderMoments();
-
-  const button = document.querySelector(`[data-reaction="${type}"][data-post-id="${postId}"]`);
-  if (button) {
-    button.classList.remove("reaction-pop");
-    void button.offsetWidth;
-    button.classList.add("reaction-pop");
-  }
 
   try {
     const data = await api("react-moment", {
